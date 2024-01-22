@@ -14,7 +14,7 @@ class UserInfo(
     @Column(name = "usr_nm")
     val userName: String,
 
-    @Column(name = "usr_icn_amt")
+    @Column(name = "usr_icm_amt")
     val userIncomeAmount: Long
 ) {
     @Id
