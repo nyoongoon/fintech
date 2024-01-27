@@ -56,7 +56,7 @@ internal class LoanRequestControllerTest {
     }
 
     @Test
-    @DisplayName("유저 요청이 들어오면 정상 응답을 주어야 한다.")
+    @DisplayName("유저 요청이 들어오면 정상 응답을 주어야 한다.") //JpaAuditingConfiguration 분리해야 실행 가능...
     fun testNormalCase() {
         // given
         val loanRequestInfoDto: LoanRequestDto.LoanRequestInputDto =

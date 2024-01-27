@@ -10,7 +10,7 @@ import javax.crypto.spec.SecretKeySpec
 class EncryptComponent { //AES256 방식 사용..
     //키값 따로 관리 안하는 방식임..
     companion object {
-        private const val secretKey = "123456789123451234056124556"
+        private const val secretKey = "12345678901234561234567890123456"
     }
 
     private val encoder = Base64.getEncoder()
