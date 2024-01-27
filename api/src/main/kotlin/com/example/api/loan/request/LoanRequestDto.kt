@@ -4,7 +4,7 @@ class LoanRequestDto {
     data class LoanRequestInputDto(
         val userName: String,
         val userIncomeAmount: Long,
-        val userRegistrationNumber: String
+        var userRegistrationNumber: String // 주민번호 암호화 필요..
     ){
         fun toUserInfoDto(userKey: String) =
             UserInfoDto(

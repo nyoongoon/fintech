@@ -16,6 +16,8 @@ class LoanRequestController (
     fun loanRequest(
         @RequestBody loanRequestInputDto: LoanRequestDto.LoanRequestInputDto
     ): ResponseEntity<LoanRequestDto.LoanRequestResponseDto> {
-        loanRequestServiceImpl.loanRequestMain(loanRequestInputDto)
+        return ResponseEntity.ok(
+            loanRequestServiceImpl.loanRequestMain(loanRequestInputDto)
+        )
     }
 }
