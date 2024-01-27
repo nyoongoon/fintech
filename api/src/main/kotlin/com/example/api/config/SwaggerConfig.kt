@@ -18,6 +18,7 @@ class SwaggerConfig {
         return Docket(DocumentationType.OAS_30)
             .useDefaultResponseMessages(false)
             .select()
+            // 설정한 base 패키지에 있는 모든 controller를 찾는다!
             .apis(RequestHandlerSelectors.basePackage("com.example.api"))
             .paths(PathSelectors.any())
             .build()
