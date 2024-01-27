@@ -1,6 +1,6 @@
-#build
-#api/build
-#consumer/build
-#css/build
-#domain/build
-#gateway/build
+build
+api/build
+consumer/build
+css/build
+domain/build
+gateway/build
