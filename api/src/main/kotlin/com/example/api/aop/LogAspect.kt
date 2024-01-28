@@ -6,6 +6,7 @@ import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Pointcut
 import org.springframework.stereotype.Component
+import org.springframework.util.StopWatch
 
 @Aspect
 @Component
@@ -20,6 +21,14 @@ class LogAspect {
     // 2. 조인포인트를 가져왔을 때 어떤 부분을 할 건지
     @Around("isApi()")
     fun loggingAspect(joinPoint: ProceedingJoinPoint): Any {
+        val stopWatch = StopWatch()
+        stopWatch.start()
 
+        val result = joinPoint.proceed()
+
+        stopWatch.stop()
+        logger.info { "${joinPoint.signature.name} ${joinPoint.args[0]} ${stopWatch.lastTaskTimeMillis}" }
+
+        return result
     }
 }
