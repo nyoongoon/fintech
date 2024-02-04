@@ -7,9 +7,8 @@ import org.apache.kafka.common.serialization.StringSerializer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.kafka.annotation.EnableKafka
-import org.springframework.kafka.core.ConsumerFactory
-import org.springframework.kafka.core.DefaultKafkaProducerFactory
-import org.springframework.kafka.core.ProducerFactory
+import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory
+import org.springframework.kafka.core.*
 
 @Configuration
 @EnableKafka
@@ -28,8 +27,7 @@ class KafkaConfig {
         return DefaultKafkaProducerFactory(configurationProperties)
     }
 
-    @Bean //프로듀서 설정 및 빈등록
-
+    @Bean //컨슈머 설정 및 빈등록
     fun consumerFactory(): ConsumerFactory<String, String>{
         val configurationProperties = HashMap<String, Any>()
         configurationProperties[ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG] = bootstrapServer
@@ -37,5 +35,19 @@ class KafkaConfig {
         configurationProperties[ConsumerConfig.AUTO_OFFSET_RESET_CONFIG] = "earliest"
         configurationProperties[ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
         configurationProperties[ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
+
+        return DefaultKafkaConsumerFactory(configurationProperties)
+    }
+
+    @Bean
+    fun kafkaTemplate(): KafkaTemplate<String, String> {
+        return KafkaTemplate(producerFactory())
+    }
+
+    // 토픽에 대한 리스나
+    @Bean
+    fun kafkaLinstenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, String> {
+        val factory = ConcurrentKafkaListenerContainerFactory<String, String>()
+        factory.consumerFactory = consumerFactory()
     }
 }
