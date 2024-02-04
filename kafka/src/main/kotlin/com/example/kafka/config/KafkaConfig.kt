@@ -46,8 +46,9 @@ class KafkaConfig {
 
     // 토픽에 대한 리스나
     @Bean
-    fun kafkaLinstenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, String> {
+    fun kafkaListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, String> {
         val factory = ConcurrentKafkaListenerContainerFactory<String, String>()
         factory.consumerFactory = consumerFactory()
+        return factory
     }
 }
