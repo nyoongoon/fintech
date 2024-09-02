@@ -8,7 +8,7 @@ dependencies {
     implementation("io.springfox:springfox-boot-starter:3.0.0")
     implementation(project(":domain"))
     implementation(project(":kafka"))
-    // 목케이
+    // 목케이 (코틀린 전용)
     testImplementation("io.mockk:mockk:1.12.0")
     // 테스트용 db는 로컬에서 하는 것이 좋음
     runtimeOnly("com.h2database:h2")

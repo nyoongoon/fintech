@@ -24,6 +24,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 internal class LoanRequestControllerTest {
     private lateinit var mockMvc: MockMvc
 
+    /**
+     * 테스트 코드에서도 @Autowired를 사용하지 않으면 의존성에 대해 한 번 더 고민할 수 있다..
+     */
     // LoanRequestController는 loanRequestService를 주입받고 있음
     // @SpringBootTest가 아니므로 -> 빈 생성 필요..
     private lateinit var loanRequestController: LoanRequestController
@@ -36,7 +39,7 @@ internal class LoanRequestControllerTest {
 
     private lateinit var mapper: ObjectMapper
 
-    @MockBean // 목처리된 빈
+    @MockBean // 목처리된 빈 - 서비스
     private lateinit var loanRequestServiceImpl: LoanRequestServiceImpl
 
     companion object {
@@ -52,6 +55,8 @@ internal class LoanRequestControllerTest {
         )
         loanRequestController = LoanRequestController(loanRequestServiceImpl)
         mockMvc = MockMvcBuilders.standaloneSetup(loanRequestController).build()
+        // 코틀린 data 기본생성자 없으므로 ObjectMapper 의존 추가해야함
+        // -> 기본생성자 없어도 직렬화 역직렬화 가능
         mapper = ObjectMapper().registerModule(KotlinModule.Builder().build())
     }
 

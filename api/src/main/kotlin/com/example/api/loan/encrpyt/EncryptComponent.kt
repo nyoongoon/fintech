@@ -6,7 +6,7 @@ import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
-@Component //어노테이션으로 만드는 방법 사용하면 편하다고 한다...
+@Component //aop? 사용하는 방식으로 암호화하면 편하긴함..
 class EncryptComponent { //AES256 방식 사용..
     //키값 따로 관리 안하는 방식임..
     companion object {

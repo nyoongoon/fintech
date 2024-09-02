@@ -27,7 +27,7 @@ class LoanRequestServiceImpl(
 
         saveUserInfo(userInfoDto)
 
-        loanRequestReview(userInfoDto)
+        loanRequestReview(userInfoDto) // 카프카로 보내서 심사 받기
 
         return LoanRequestDto.LoanRequestResponseDto(userKey)
     }

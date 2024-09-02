@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/fintech/api/v1")
 class LoanRequestController (
     // 왜 인터페이스로 안 받는지..?
-    private val loanRequestServiceImpl: LoanRequestServiceImpl
+    private val loanRequestService: LoanRequestService
 ){
     @PostMapping("/request")
     fun loanRequest(
         @RequestBody loanRequestInputDto: LoanRequestDto.LoanRequestInputDto
     ): ResponseEntity<LoanRequestDto.LoanRequestResponseDto> {
         return ResponseEntity.ok(
-            loanRequestServiceImpl.loanRequestMain(loanRequestInputDto)
+            loanRequestService.loanRequestMain(loanRequestInputDto)
         )
     }
 }
