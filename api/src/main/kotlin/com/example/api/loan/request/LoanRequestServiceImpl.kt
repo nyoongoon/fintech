@@ -3,6 +3,7 @@ package com.example.api.loan.request
 import com.example.api.loan.GenerateKey
 import com.example.api.loan.encrpyt.EncryptComponent
 import com.example.domain.repository.UserInfoRepository
+import com.example.kafka.enum.KafkaTopic
 import com.example.kafka.producer.LoanRequestSender
 import org.springframework.stereotype.Service
 
@@ -21,9 +22,12 @@ class LoanRequestServiceImpl(
         // 엔티티 생성 전에 암호화 처리..
         loanRequestInputDto.userRegistrationNumber =
             encryptComponent.encryptString(loanRequestInputDto.userRegistrationNumber)
-        saveUserInfo(loanRequestInputDto.toUserInfoDto(userKey))
 
-        loanRequestReview(userKey)
+        val userInfoDto = loanRequestInputDto.toUserInfoDto(userKey)
+
+        saveUserInfo(userInfoDto)
+
+        loanRequestReview(userInfoDto)
 
         return LoanRequestDto.LoanRequestResponseDto(userKey)
     }
@@ -32,8 +36,10 @@ class LoanRequestServiceImpl(
         userInfoRepository.save(userInfoDto.toEntity())
 
 
-    override fun loanRequestReview(
-        userKey: String
-    ) {
+    override fun loanRequestReview(userInfoDto: UserInfoDto) {
+        loanRequestSender.sendMessage(
+            KafkaTopic.LOAN_REQUEST,
+            userInfoDto.toLoanRequestKafkaDto()
+        )
     }
 }

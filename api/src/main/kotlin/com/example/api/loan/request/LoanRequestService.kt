@@ -8,8 +8,7 @@ interface LoanRequestService {
         loanRequestInputDto: LoanRequestDto.LoanRequestInputDto
     ): LoanRequestDto.LoanRequestResponseDto
 
-    fun saveUserInfo(
-        userInfoDto: UserInfoDto
-    ): UserInfo
-    fun loanRequestReview(userKey: String)
+    fun saveUserInfo(userInfoDto: UserInfoDto): UserInfo
+
+    fun loanRequestReview(userInfoDto: UserInfoDto)
 }
