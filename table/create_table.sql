@@ -13,4 +13,4 @@ create table LOAN_REVIEW
     usr_key      varchar(32)        not null unique,
     loan_lmt_amt bigint default 0   not null,
     loan_intrt   double default 0.0 not null
-)
+);

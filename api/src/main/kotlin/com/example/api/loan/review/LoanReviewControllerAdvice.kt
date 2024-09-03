@@ -11,5 +11,4 @@ class LoanReviewControllerAdvice { // exception 처리 -> 1. ControllerAdvice 2.
     @ExceptionHandler(CustomException::class)
     fun customExceptionHandler(customException: CustomException) =
         ErrorResponse(customException).toResponseEntity()
-
 }

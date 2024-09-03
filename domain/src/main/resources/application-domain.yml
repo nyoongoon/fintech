@@ -1,5 +1,7 @@
 spring:
   jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     generate-ddl: false
     show-sql: true
     hibernate:
@@ -9,5 +11,4 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/fintech?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
-    username: fintech
-    password: fintech
+    username: root

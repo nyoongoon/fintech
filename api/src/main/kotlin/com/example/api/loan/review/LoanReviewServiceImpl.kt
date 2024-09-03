@@ -16,7 +16,7 @@ class LoanReviewServiceImpl(
         return LoanReviewDto.LoanReviewResponseDto(
             userKey = userKey,
             loanResult = getLoanResult(userKey)?.toResponseDto()
-                ?: throw CustomException(CustomErrorCode.RESULT_NOT_FOUND) // nullable
+                ?: throw CustomException(CustomErrorCode.RESULT_NOT_FOUND) // null 인 경우
         )
     }
 
