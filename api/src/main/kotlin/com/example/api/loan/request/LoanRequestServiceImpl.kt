@@ -27,7 +27,7 @@ class LoanRequestServiceImpl(
 
         saveUserInfo(userInfoDto)
 
-        loanRequestReview(userInfoDto) // 카프카로 보내서 심사 받기
+        loanRequestReview(userInfoDto) // 카프카로 보내서 심사 요청
 
         return LoanRequestDto.LoanRequestResponseDto(userKey)
     }
@@ -37,7 +37,7 @@ class LoanRequestServiceImpl(
 
 
     override fun loanRequestReview(userInfoDto: UserInfoDto) {
-        loanRequestSender.sendMessage(
+        loanRequestSender.sendMessage( // 카프카에 토픽 발행
             KafkaTopic.LOAN_REQUEST,
             userInfoDto.toLoanRequestKafkaDto()
         )

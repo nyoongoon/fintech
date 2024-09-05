@@ -1,19 +1,22 @@
-# docker-compose up -d 라는 명령어로 띄우기
+# docker compose up -d 라는 명령어로 띄우기
 version: '2'
 services:
   zookeeper:
-    image: wurstmeister/zookeeper
-    container_name: zookeeper
+    container_name: local-zookeeper
+    image: wurstmeister/zookeeper:3.4.6
     ports:
       - "2181:2181"
   kafka:
-    image: wurstmeister/kafka
-    container_name: kafka
+    container_name: local-kafka
+    image: wurstmeister/kafka:2.13-2.8.1
+    depends_on:
+      - zookeeper
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092 # 추가함..
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1 # 싱글 브로커 환경
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_CREATE_TOPICS: "chat:1:1" # Topic 명 : Partition 개수 : Replica 개수
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

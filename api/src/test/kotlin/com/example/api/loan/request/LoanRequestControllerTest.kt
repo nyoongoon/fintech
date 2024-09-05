@@ -4,6 +4,7 @@ import com.example.api.loan.GenerateKey
 import com.example.api.loan.encrpyt.EncryptComponent
 import com.example.domain.domain.UserInfo
 import com.example.domain.repository.UserInfoRepository
+import com.example.kafka.producer.LoanRequestSender
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.mockk.every
@@ -35,6 +36,8 @@ internal class LoanRequestControllerTest {
 
     private lateinit var encryptComponent: EncryptComponent
 
+    private val loanRequestSender: LoanRequestSender = mockk()
+
     private val userInfoRepository: UserInfoRepository = mockk() //목처리된 레포지토리가 생성된다.
 
     private lateinit var mapper: ObjectMapper
@@ -51,7 +54,7 @@ internal class LoanRequestControllerTest {
         generateKey = GenerateKey()
         encryptComponent = EncryptComponent()
         loanRequestServiceImpl = LoanRequestServiceImpl(
-            generateKey, userInfoRepository, encryptComponent
+            generateKey, userInfoRepository, encryptComponent, loanRequestSender
         )
         loanRequestController = LoanRequestController(loanRequestServiceImpl)
         mockMvc = MockMvcBuilders.standaloneSetup(loanRequestController).build()

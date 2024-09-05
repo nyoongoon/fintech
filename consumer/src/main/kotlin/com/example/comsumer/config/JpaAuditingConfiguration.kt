@@ -1,4 +1,4 @@
-package com.example.api.config
+package com.example.comsumer.config
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing
