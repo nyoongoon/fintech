@@ -15,6 +15,4 @@ data class UserInfoDto(
         )
     // 카프카 dto 변 메서드
     fun toLoanRequestKafkaDto() = LoanRequestDto(userKey, userName, userIncomeAmount, userRegistrationNumber)
-
-
 }
