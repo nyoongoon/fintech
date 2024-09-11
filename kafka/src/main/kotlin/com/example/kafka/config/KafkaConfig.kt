@@ -43,8 +43,7 @@
             val configurationProperties = HashMap<String, Any>()
             configurationProperties[ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG] = bootstrapServer
             configurationProperties[ConsumerConfig.GROUP_ID_CONFIG] = "fintech" // 컨슈머 그룹 내에서 오프셋을 관리하므로 그룹 지정
-//            configurationProperties[ConsumerConfig.AUTO_OFFSET_RESET_CONFIG] = "earliest" //오프셋 설정
-            configurationProperties[ConsumerConfig.AUTO_OFFSET_RESET_CONFIG] = "latest"
+            configurationProperties[ConsumerConfig.AUTO_OFFSET_RESET_CONFIG] = "earliest" //오프셋 설정
             configurationProperties[ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
             configurationProperties[ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
 
