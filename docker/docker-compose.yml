@@ -1,33 +1,90 @@
-# docker compose up -d 라는 명령어로 띄우기
+## docker compose up -d 라는 명령어로 띄우기
+#version: '2'
+#services:
+#  zookeeper:
+#    container_name: zookeeper
+#    image: wurstmeister/zookeeper:3.4.6
+#    ports:
+#      - "2181:2181"
+#    networks:
+#      - fintech
+#  kafka:
+#    container_name: kafka
+#    image: wurstmeister/kafka:2.13-2.8.1
+#    depends_on:
+#      - zookeeper
+#    ports:
+#      - "9092:9092"
+#    networks:
+#      - fintech
+#    environment: #이부분 수정해서 server.properties를 수정해야할듯...!
+#      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092  # 여기서 1.2.3.4를 실제 IP 또는 호스트 이름으로 변경
+#      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092  # 내부적으로는 모든 인터페이스에서 수신
+#      KAFKA_ADVERTISED_HOST_NAME: kafka
+#      #      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+#      KAFKA_ADVERTISED_PORT: 9092
+#      KAFKA_CREATE_TOPICS: "loan_request:1:1" # Topic 명 : Partition 개수 : Replica 개수
+#      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#    # 이미지 생성한 컨테이너 띄우기
+#  api:
+#    image: api:1.0.1
+#    container_name: api
+#    ports:
+#      - "80:80"
+#    networks:
+#      - fintech
+#  consumer:
+#    image: consumer:1.0.1
+#    container_name: consumer
+#    ports:
+#      - "8080:8080"
+#    networks:
+#      - fintech
+#  css:
+#    image: css:1.0.1
+#    container_name: css
+#    ports:
+#      - "8081:8081"
+#    networks:
+#      - fintech
+#  nginx:
+#    image: nginx:1.0.1
+#    container_name: nginx
+#    ports:
+#      - "8085:8085"
+#    networks:
+#      - fintech
+#
+#
+#
+## 각 컨테이너 끼리 네트워크 통신 가능하게 설정
+#networks:
+#  fintech:
+#    driver: bridge
+
 version: '2'
 services:
   zookeeper:
+    image: wurstmeister/zookeeper
     container_name: zookeeper
-    image: wurstmeister/zookeeper:3.4.6
     ports:
       - "2181:2181"
     networks:
       - fintech
   kafka:
+    image: wurstmeister/kafka:2.12-2.5.0
     container_name: kafka
-    image: wurstmeister/kafka:2.13-2.8.1
-    depends_on:
-      - zookeeper
     ports:
       - "9092:9092"
-    networks:
-      - fintech
-    environment: #이부분 수정해서 server.properties를 수정해야할듯...!
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092  # 여기서 1.2.3.4를 실제 IP 또는 호스트 이름으로 변경
-      KAFKA_LISTENERS: PLAINTEXT://kafka:9092  # 내부적으로는 모든 인터페이스에서 수신
+    environment:
       KAFKA_ADVERTISED_HOST_NAME: kafka
-#      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-      KAFKA_ADVERTISED_PORT: 9092
-      KAFKA_CREATE_TOPICS: "loan_request:1:1" # Topic 명 : Partition 개수 : Replica 개수
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    # 이미지 생성한 컨테이너 띄우기
+    networks:
+      - fintech
   api:
     image: api:1.0.1
     container_name: api
@@ -57,9 +114,6 @@ services:
     networks:
       - fintech
 
-
-
-# 각 컨테이너 끼리 네트워크 통신 가능하게 설정
 networks:
   fintech:
     driver: bridge
