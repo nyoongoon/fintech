@@ -15,7 +15,6 @@
             <option value="$PROJECT_DIR$/consumer" />
             <option value="$PROJECT_DIR$/css" />
             <option value="$PROJECT_DIR$/domain" />
-            <option value="$PROJECT_DIR$/gateway" />
             <option value="$PROJECT_DIR$/kafka" />
           </set>
         </option>

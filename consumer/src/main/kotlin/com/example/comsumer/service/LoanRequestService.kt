@@ -13,15 +13,20 @@ class LoanRequestService(
     private val loanReviewRepository: LoanReviewRepository
 ) {
     companion object {
-        const val cssUrl = "http://localhost:8081/css/api/v1/request"
+        const val nginxUrl = "http://nginx:8085/css/api/v1/request"
     }
 
     /**
      * CB Component로 요청 보내기 -> 응답값을 DB에 저장하기
      */
     fun loanRequest(loanRequestDto: LoanRequestDto) {
+        println("request to nginx...")
         val reviewResult = loanRequestToCb(loanRequestDto)
+        println("nginx request complete...")
+
+        println("request to kafka...")
         saveLoanReviewData(reviewResult.toLoanReviewEntity())
+        println("nginx request complete..")
     }
 
     private fun loanRequestToCb(loanRequestDto: LoanRequestDto): ReviewResponseDto {
@@ -33,7 +38,7 @@ class LoanRequestService(
             .setReadTimeout(Duration.ofMillis(1000))
             .build();
 
-        return restTemplate.postForEntity(cssUrl, loanRequestDto, ReviewResponseDto::class.java ).body!!
+        return restTemplate.postForEntity(nginxUrl, loanRequestDto, ReviewResponseDto::class.java ).body!!
     }
 
     private fun saveLoanReviewData(loanReview: LoanReview) = loanReviewRepository.save(loanReview)

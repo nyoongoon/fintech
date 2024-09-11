@@ -1,7 +1,7 @@
 spring:
   jpa:
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+#    database: mysql
+#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     generate-ddl: false
     show-sql: true
     hibernate:
@@ -10,10 +10,11 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/fintech?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    # host 컨테이너명으로 설정
+    url: jdbc:mysql://fintech-mysql:3306/fintech?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: fintech
     password: fintech
   redis:
-    host: localhost
+    host: fintech-redis
     port: 6379
 

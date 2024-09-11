@@ -15,7 +15,7 @@
     class KafkaConfig {
         // 복잡한 환경인 경우 프로퍼티로 가져오면 좋음
         companion object {
-            const val bootstrapServer = "localhost:9092"
+            const val bootstrapServer = "kafka:9092"
         }
 
         @Bean //프로듀서 설정 추가하여 빈 등록
@@ -43,7 +43,8 @@
             val configurationProperties = HashMap<String, Any>()
             configurationProperties[ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG] = bootstrapServer
             configurationProperties[ConsumerConfig.GROUP_ID_CONFIG] = "fintech" // 컨슈머 그룹 내에서 오프셋을 관리하므로 그룹 지정
-            configurationProperties[ConsumerConfig.AUTO_OFFSET_RESET_CONFIG] = "earliest" //오프셋 설정
+//            configurationProperties[ConsumerConfig.AUTO_OFFSET_RESET_CONFIG] = "earliest" //오프셋 설정
+            configurationProperties[ConsumerConfig.AUTO_OFFSET_RESET_CONFIG] = "latest"
             configurationProperties[ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
             configurationProperties[ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
 
